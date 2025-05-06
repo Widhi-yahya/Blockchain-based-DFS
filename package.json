@@ -1,13 +1,12 @@
 {
   "name": "blockchain-fs",
   "version": "1.0.0",
-  "description": "A distributed filesystem based on blockchain technology.",
+  "description": "Blockchain-based Distributed File System",
   "main": "src/app.ts",
   "scripts": {
     "start": "ts-node src/app.ts",
-    "build": "tsc",
-    "deploy": "./scripts/deploy.sh",
-    "setup": "./scripts/setup-node.sh"
+    "audit": "npm audit",
+    "audit:fix": "npm audit fix"
   },
   "dependencies": {
     "express": "^4.17.1",

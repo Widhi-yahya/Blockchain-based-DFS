@@ -11,6 +11,7 @@ if ! command -v node &> /dev/null; then
     sudo apt-get install -y nodejs
 else
     echo "Node.js is already installed."
+    echo "Node.js version: $(node --version)"
 fi
 
 if ! command -v npm &> /dev/null; then
@@ -18,13 +19,15 @@ if ! command -v npm &> /dev/null; then
     sudo apt-get install -y npm
 else
     echo "npm is already installed."
+    echo "npm version: $(npm --version)"
 fi
 
-echo "Updating npm packages..."
-npm install -g npm@latest
+# Install a compatible version of npm instead of latest
+echo "Updating npm packages to compatible version..."
+npm install -g npm@8.19.4 || echo "Continuing with existing npm version"
 
 echo "Installing TypeScript and ts-node..."
-npm install -g typescript ts-node
+npm install -g typescript@4.9.5 ts-node@10.9.1
 
 echo "Installing project dependencies..."
 npm install

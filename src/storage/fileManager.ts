@@ -1,38 +1,29 @@
-import fs from 'fs';
-import path from 'path';
-import crypto from 'crypto';
+import * as fs from 'fs';
+import * as path from 'path';
 
 class FileManager {
-    private storagePath: string;
+    private storageDir: string;
 
-    constructor(storagePath: string) {
-        this.storagePath = storagePath;
-        this.initializeStorage();
-    }
-
-    private initializeStorage() {
-        if (!fs.existsSync(this.storagePath)) {
-            fs.mkdirSync(this.storagePath, { recursive: true });
+    constructor(storageDir: string = 'storage') {
+        this.storageDir = storageDir;
+        if (!fs.existsSync(this.storageDir)) {
+            fs.mkdirSync(this.storageDir, { recursive: true });
         }
     }
 
-    public uploadFile(fileName: string, fileData: Buffer): string {
-        const fileHash = this.calculateHash(fileData);
-        const filePath = path.join(this.storagePath, fileHash + path.extname(fileName));
-        fs.writeFileSync(filePath, fileData);
-        return fileHash;
+    async saveFile(fileName: string, fileBuffer: Buffer): Promise<string> {
+        const filePath = path.join(this.storageDir, fileName);
+        await fs.promises.writeFile(filePath, fileBuffer);
+        return filePath;
     }
 
-    public getFile(fileHash: string): Buffer | null {
-        const filePath = path.join(this.storagePath, fileHash);
-        if (fs.existsSync(filePath)) {
-            return fs.readFileSync(filePath);
-        }
-        return null;
+    async getFile(fileName: string): Promise<Buffer> {
+        const filePath = path.join(this.storageDir, fileName);
+        return fs.promises.readFile(filePath);
     }
 
-    private calculateHash(data: Buffer): string {
-        return crypto.createHash('sha256').update(data).digest('hex');
+    async listFiles(): Promise<string[]> {
+        return fs.promises.readdir(this.storageDir);
     }
 }
 

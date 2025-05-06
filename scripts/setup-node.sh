@@ -23,10 +23,19 @@ fi
 echo "Updating npm packages..."
 npm install -g npm@latest
 
+echo "Installing TypeScript and ts-node..."
+npm install -g typescript ts-node
+
+echo "Installing project dependencies..."
+npm install
+
+echo "Installing type definitions..."
+npm install --save-dev @types/node @types/express @types/body-parser @types/multer
+
 echo "Running npm audit..."
 npm audit
 
 echo "Fixing vulnerabilities..."
-npm audit fix
+npm audit fix || true
 
 echo "Setup complete."

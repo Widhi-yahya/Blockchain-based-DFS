@@ -1,4 +1,4 @@
-# Blockchain Distributed Filesystem
+# Blockchain Distributed Filesystem v2
 
 This project implements a distributed filesystem based on blockchain technology. It allows users to upload files to a decentralized network of nodes, ensuring data integrity and availability.
 
